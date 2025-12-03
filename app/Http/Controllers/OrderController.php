@@ -2,63 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function chekout()
     {
-        //
+        $cart = session()->get('cart', []);
+
+        if (empty($cart)) {
+            return back()->with('error', 'Your cart is empty!');
+        }
+
+        return view('checkout', compact('cart'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function processOrder(Request $request)
     {
-        //
-    }
+        $cart = session()->get('cart', []);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        if (empty($cart)) {
+            return back()->with('error', 'Your cart is empty!');
+        }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $order = Order::create([
+            'user_id' => Auth::id(),
+            'total'   => collect($cart)->sum(fn($item) => $item['price'] * $item['qty'])
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        foreach ($cart as $id => $item) {
+            OrderItem::create([
+                'order_id'  => $order->id,
+                'product_id'=> $id,
+                'qty'       => $item['qty'],
+                'price'     => $item['price']
+            ]);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        session()->forget('cart');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect('/')->with('success', 'Order placed!');
     }
 }
