@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
 
 class UserSeeder extends Seeder
 {
@@ -17,13 +19,13 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin',
                 'email' => 'admin@eclairora.com',
-                'password' => 'admin123',
+                'password' => Hash::make('admin123'),
                 'role' => 'admin'
             ],
             [
                 'name' => 'Erika',
                 'email' => 'erika@gmail.com',
-                'password' => 'erika123',
+                'password' => Hash::make('erika123'),
                 'role' => 'customer'
             ],
         ]);
