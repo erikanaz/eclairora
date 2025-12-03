@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,19 +16,20 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
-            [
-                'name' => 'Admin',
-                'email' => 'admin@eclairora.com',
-                'password' => Hash::make('admin123'),
-                'role' => 'admin'
-            ],
-            [
-                'name' => 'Erika',
-                'email' => 'erika@gmail.com',
-                'password' => Hash::make('erika123'),
-                'role' => 'customer'
-            ],
+        // ADMIN
+        $admin = User::create([
+            'name' => 'Admin',
+            'email' => 'admin@eclairora.com',
+            'password' => Hash::make('admin123'),
         ]);
+        $admin->assignRole('admin'); // <-- Peran dari Spatie
+
+        // CUSTOMER
+        $customer = User::create([
+            'name' => 'Erika',
+            'email' => 'erika@gmail.com',
+            'password' => Hash::make('erika123'),
+        ]);
+        $customer->assignRole('customer'); // <-- Peran dari Spatie
     }
 }
