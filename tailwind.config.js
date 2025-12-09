@@ -11,8 +11,17 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                'cream-pastel': '#FFF4EB',
+                'rose-gold': '#D9A5A0',
+                'cocoa-brown': '#8C5A47',
+                'lavender-mist': '#E6DFF5',
+                'gold': '#DDBB67',
+                'dark-cocoa': '#3B2A26',
+            },
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
+                serif: ['"Playfair Display"', ...defaultTheme.fontFamily.serif],
             },
         },
     },
