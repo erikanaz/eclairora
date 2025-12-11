@@ -1,3 +1,8 @@
+@php
+    use App\Services\SupabaseService;
+    $supabase = new SupabaseService();
+@endphp
+
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 md:px-10 py-2">
         <!-- Selamat Datang Section -->
@@ -147,7 +152,7 @@
                 @foreach($featuredProducts as $product)
                 <div class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2">
                     <div class="relative h-72 overflow-hidden">
-                        <img src="{{ $product->image ? asset('images/' . $product->image) : asset('images/default-pastry.png') }}" 
+                        <img src="{{ $product->image ? $supabase->getPublicUrl($product->image) : asset('images/default-pastry.png') }}" 
                              alt="{{ $product->name }}" 
                              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                              onerror="this.onerror=null; this.src='{{ asset('images/default-pastry.png') }}'">

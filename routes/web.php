@@ -28,6 +28,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'role:admin'])->grou
     Route::resource('products', ProductController::class);
 });
 
+use Kreait\Firebase\Factory;
+
+Route::get('/test-firebase', function() {
+    $factory = (new Factory)->withServiceAccount(storage_path('app/firebase/serviceAccountKey.json'));
+    $firestore = $factory->createFirestore()->database();
+    return $firestore ? 'Connected to Firestore!' : 'Failed';
+});
+
 Route::prefix('customer')
     ->name('customer.')
     ->middleware(['auth', 'role:customer'])

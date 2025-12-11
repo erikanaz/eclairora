@@ -1,3 +1,8 @@
+@php
+    use App\Services\SupabaseService;
+    $supabase = new SupabaseService();
+@endphp
+
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 md:px-10 py-2">
         <!-- Header -->
@@ -71,18 +76,21 @@
             @foreach($products as $index => $product)
             <div class="bg-white rounded-2xl shadow-lg overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 animate-fade-in-up" style="animation-delay: {{ 0.2 + ($index * 0.1) }}s">
                 <div class="relative h-72 overflow-hidden">
+                    
+
                     @if($product->image)
-                    <img src="{{ asset('images/' . $product->image) }}" 
-                        alt="{{ $product->name }}" 
-                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        onerror="this.onerror=null; this.src='{{ asset('images/default-pastry.png') }}'">
+                        <img src="{{ $supabase->getPublicUrl($product->image) }}" 
+                            alt="{{ $product->name }}" 
+                            class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            onerror="this.onerror=null; this.src='{{ asset('images/default-pastry.png') }}'">
                     @else
-                    <div class="w-full h-full bg-cream-pastel flex items-center justify-center">
-                        <svg class="w-16 h-16 text-rose-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                    </div>
+                        <div class="w-full h-full bg-cream-pastel flex items-center justify-center">
+                            <svg class="w-16 h-16 text-rose-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                        </div>
                     @endif
+
                     
                     <!-- Anda bisa menambahkan badge khusus berdasarkan logika bisnis -->
                     @if($loop->first)

@@ -1,3 +1,8 @@
+@php
+    use App\Services\SupabaseService;
+    $supabase = new SupabaseService();
+@endphp
+
 <x-app-layout>
     <div class="max-w-4xl mx-auto px-4 md:px-10 py-8">
         <!-- Progress Steps -->
@@ -104,7 +109,7 @@
                             @foreach($cart->items as $item)
                             <div class="flex items-center">
                                 <div class="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0">
-                                    <img src="{{ $item->product->image ? asset('images/' . $item->product->image) : asset('images/default-pastry.png') }}" 
+                                    <img src="{{ $item->product->image ? $supabase->getPublicUrl($item->product->image) : asset('images/default-pastry.png') }}" 
                                          alt="{{ $item->product->name }}"
                                          class="w-full h-full object-cover">
                                 </div>

@@ -1,3 +1,8 @@
+@php
+    use App\Services\SupabaseService;
+    $supabase = new SupabaseService();
+@endphp
+
 <x-app-layout>
     <!-- CSS untuk loading spinner -->
     <style>
@@ -92,10 +97,10 @@
                              data-item-id="{{ $item->id }}">
                             <!-- Gambar Produk -->
                             <div class="sm:w-32 sm:h-32 w-full h-32 rounded-lg overflow-hidden flex-shrink-0">
-                                <img src="{{ $item->product->image ? asset('images/' . $item->product->image) : asset('images/default-pastry.png') }}" 
-                                     alt="{{ $item->product->name }}" 
-                                     class="w-full h-full object-cover"
-                                onerror="this.onerror=null; this.src='{{ asset('images/default-pastry.png') }}'">
+                                <img src="{{ $item->product->image ? $supabase->getPublicUrl($item->product->image) : asset('images/default-pastry.png') }}"
+								alt="{{ $item->product->name }}"
+								class="w-full h-full object-cover"
+								onerror="this.onerror=null; this.src='{{ asset('images/default-pastry.png') }}'">
                             </div>
                             
                             <!-- Detail Produk -->
