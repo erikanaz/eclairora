@@ -21,4 +21,9 @@ class CartItem extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function subtotal(): float
+    {
+        return $this->quantity * $this->product->price;
+    }
 }
